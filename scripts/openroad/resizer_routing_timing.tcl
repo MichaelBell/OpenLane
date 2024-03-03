@@ -54,7 +54,8 @@ estimate_parasitics -global_routing
 # Resize
 repair_timing -setup \
     -setup_margin $::env(GLB_RESIZER_SETUP_SLACK_MARGIN) \
-    -max_buffer_percent $::env(GLB_RESIZER_SETUP_MAX_BUFFER_PERCENT)
+    -max_buffer_percent $::env(GLB_RESIZER_SETUP_MAX_BUFFER_PERCENT) \
+    -skip_pin_swap
 
 set arg_list [list]
 lappend arg_list -hold
@@ -64,6 +65,7 @@ lappend arg_list -max_buffer_percent $::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT)
 if { $::env(GLB_RESIZER_ALLOW_SETUP_VIOS) == 1 } {
     lappend arg_list -allow_setup_violations
 }
+lappend arg_list -skip_pin_swap
 repair_timing {*}$arg_list
 
 source $::env(SCRIPTS_DIR)/openroad/common/dpl_cell_pad.tcl
